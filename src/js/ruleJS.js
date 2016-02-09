@@ -1,3 +1,6 @@
+var Parser = require('../parser/parser').parser
+var Formula = require('formulajs')
+
 var ruleJS = (function (root) {
   'use strict';
 
@@ -9,7 +12,7 @@ var ruleJS = (function (root) {
   /**
    * root element
    */
-  var rootElement = document.getElementById(root) || null;
+  var rootElement = null;//document.getElementById(root) || null;
 
   /**
    * current version
@@ -1305,3 +1308,5 @@ var ruleJS = (function (root) {
   };
 
 });
+
+module.exports = ruleJS

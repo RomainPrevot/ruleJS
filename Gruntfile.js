@@ -10,6 +10,16 @@
  *
  * See http://gruntjs.com/getting-started for more information about Grunt
  */
+var webpack = require('webpack');
+
+var plugins = [
+  new webpack.optimize.DedupePlugin(),
+
+  // this is required to be consumed by require.js
+  new webpack.dependencies.LabeledModulesPlugin()
+];
+var prod_plugins = plugins + [new webpack.optimize.UglifyJsPlugin()]
+
 module.exports = function (grunt) {
   grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
@@ -17,8 +27,27 @@ module.exports = function (grunt) {
       // GENERATED PARSER USING JISON LIBRARY
       jison: {
         target : {
-          options: {moduleType: 'js', moduleName: 'Parser'},
+          options: {moduleType: 'commonjs', moduleName: 'Parser'},
           files: {'src/parser/parser.js': 'src/parser/parser.jison'}
+        }
+      },
+
+      webpack: {
+        webpack_dist: {
+          // webpack options
+          entry: {
+            'ruleJS': './index'
+          },
+          node: {
+            fs: 'empty',
+          },
+          output: {
+            path: "dist",
+            filename: "[name].js",
+            library: 'ruleJS',
+            libraryTarget: 'umd'
+          },
+          plugins: plugins
         }
       },
 
@@ -176,6 +205,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['default', 'jasmine']);
   grunt.registerTask('start', ['default', 'connect']);
+  grunt.registerTask('build_webpack', ['webpack_dist']);
 
   grunt.loadNpmTasks('grunt-replace');
   grunt.loadNpmTasks('grunt-contrib-clean');
@@ -188,4 +218,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-inject');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-jison');
+  grunt.loadNpmTasks('grunt-webpack');
 };
