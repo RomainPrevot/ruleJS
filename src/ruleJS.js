@@ -347,7 +347,7 @@ class Matrix {
 
           var item = this.getItem(refId);
           if (item.deps.length) {
-            this.getTotalDependencies(refId);
+            this.getTotalDependencies(refId, allDependencies);
           }
         }
       });
