@@ -880,4 +880,26 @@ describe('parse()', function () {
     parsed = rules.parse("XOR(true, false, true)");
     expect(parsed.result).toBe(false);
   });
+
+  describe('time', function () {
+    it('time AM', function () {
+      parsed = rules.parse('6:00 AM');
+      expect(parsed.error).toBeNull();
+    });
+
+    it('time 24h (AM)', function () {
+      parsed = rules.parse('6:00');
+      expect(parsed.error).toBeNull();
+    });
+
+    it('time PM', function () {
+      parsed = rules.parse('6:00 PM');
+      expect(parsed.error).toBeNull();
+    });
+
+    it('time 24h (PM)', function () {
+      parsed = rules.parse('18:00');
+      expect(parsed.error).toBeNull();
+    });
+  });
 });
