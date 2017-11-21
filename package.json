@@ -2,7 +2,7 @@
   "name": "ruleJS",
   "description": "ruleJS - Javascript parser excel-like formulas.",
   "version": "0.0.6",
-  "main": "dist/ruleJS.js",
+  "main": "dist/full/ruleJS.all.full.js",
   "scripts": {
     "build": "rimraf dist && webpack --no-minimize && webpack",
     "coverage": "babel-node node_modules/isparta/bin/isparta cover node_modules/mocha/bin/_mocha --report lcovonly -- -R spec",
